@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import tennisIcon from './tennis.svg'; //Icon attribution --- Icon made by Freepik from https://www.flaticon.com/
+import ball from './ball.svg'; //Icon attribution --- Icon made by Freepik from https://www.flaticon.com/
 import "./scoreBoard.style.css";
 
 
@@ -28,7 +28,7 @@ class ScoreBoard extends Component {
                         <h1>{this.state.boardTitle}</h1>
 
                         <h5 className="py-4">
-                            <img src= {tennisIcon} className="App-logo" alt="logo"></img>
+                            <img src= {ball} className="App-logo" alt="logo"></img>
                         </h5>
 
                         <h4>
