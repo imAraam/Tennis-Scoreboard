@@ -61,17 +61,6 @@ class ScoreBoard extends Component {
     )   
 }
 
-//resets state variables and displays message to winning player
-resetBoard = (winningPlayer) => {
-    this.setState({
-        game1: 0,
-        game2: 0,
-        set1: 0,
-        set2: 0,
-        boardTitle: "Congratulations " + winningPlayer
-    })
-}
-
 handleWin = (player) => {
     let p1 = this.props.playerObj.firstPlayer
     let p2 = this.props.playerObj.secondPlayer
@@ -93,19 +82,18 @@ updateSetPoint = (player) => {
             this.handleWin(player)
         }
         else {
-            this.setState({
-                set1: this.state.set1 + 1
-            }) }      }
+            this.addSetPoint(player)  
+        }            
+    }
     else {
         if (this.state.set2 === 1){
             //player2 wins
             this.handleWin(player)
         }
         else {
-            this.setState({
-                set2: this.state.set2 + 1
-            }) 
-        }     }
+            this.addSetPoint(player) 
+        }     
+    }
 }
 
 isDeuce = (player) => {
@@ -165,83 +153,48 @@ displayScore(player) {
     return playerScore;
 }
 
-addPlayerPoint = (player) => {
-    if (player === 1)
-    {
-        this.setState({
-            score1: this.state.score1 + 1,
-            boardTitle: "Score Board"
-        })  
-    }
-    else {
-        this.setState({
-            score2: this.state.score2 + 1,
-            boardTitle: "Score Board"
-        })  
-    }
-};
-
 updateGamePoint = (player) => {
     if (player === 1)
     {
         //If opponent game score is also 5, continue playing till there is a game difference of 2
         if (this.state.game1 === 5 && this.state.game2 === 5){
-            this.setState({
-                game1: this.state.game1 + 1
-            })}
+            this.addGamePoint(player)}
         
         else {
-            this.setState({
-                game1: this.state.game1 + 1
-            })  
+            this.addGamePoint(player) 
             //Reset game score and add 1 set point to winning player
             if (this.state.game1 >= 5){
                 this.updateSetPoint(player)
 
-                this.setState({
-                    game1: 0,
-                    game2: 0
-                })}
+                this.resetGames()}
         }           
     }
     else {
         if (this.state.game2 === 5 && this.state.game1 === 5){
-            this.setState({
-                game2: this.state.game2 + 1
-            })}
+            this.addGamePoint(player)}
         else {
-            this.setState({
-                game2: this.state.game2 + 1
-            })  
+            this.addGamePoint(player)
+
             if (this.state.game2 >= 5){
                 this.updateSetPoint(player)
 
-                this.setState({
-                    game1: 0,
-                    game2: 0
-                })}
+                this.resetGames()}
         } 
     }
 };
 
-calculateScore = (player) => { /*----------condense this function----------*/
+calculateScore = (player) => { 
     if (player === 1) 
     {
         this.isDeuce(player);
         //Check if point scoring player has advantage
         if (this.state.score1 >= 4 && this.state.score1 === this.state.score2 + 1) {
-            this.setState({
-                score1: 0,
-                score2: 0
-            })   
+            this.resetScore()  
             this.updateGamePoint(player)
         }           
         //Check if player scored game point
         else if ((this.state.score1 >= 3) && (this.state.score1 > this.state.score2 +2)){
-            this.setState({
-                score1: 0,
-                score2: 0
-            }) 
+            this.resetScore()
             this.updateGamePoint(player)
         }
         else {
@@ -252,17 +205,11 @@ calculateScore = (player) => { /*----------condense this function----------*/
     else {
         this.isDeuce(player);
         if (this.state.score2 >= 4 && this.state.score2 === this.state.score1 + 1){
-            this.setState({
-                score1: 0,
-                score2: 0
-            })   
+            this.resetScore()
             this.updateGamePoint(player)
         }
         else if ((this.state.score2 >= 3) && (this.state.score2 > this.state.score1 +2)){
-            this.setState({
-                score1: 0,
-                score2: 0
-            }) 
+            this.resetScore()
             this.updateGamePoint(player)
         }
         else {
@@ -270,6 +217,77 @@ calculateScore = (player) => { /*----------condense this function----------*/
         }
     }     
 };
+
+//--------------------Auxiliary functions---------------------
+
+resetScore = () => {
+    this.setState({
+        score1: 0,
+        score2: 0
+    }) 
+}
+
+resetGames = () => {
+    this.setState({
+        game1: 0,
+        game2: 0
+    })
+}
+
+//resets state variables and displays message to winning player
+resetBoard = (winningPlayer) => {
+    this.setState({
+        game1: 0,
+        game2: 0,
+        set1: 0,
+        set2: 0,
+        boardTitle: "Congratulations " + winningPlayer
+    })
+}
+
+addSetPoint = (player) => {
+    if (player === 1)
+    {
+        this.setState({
+            set1: this.state.set1 + 1
+        })
+    }
+    else {
+        this.setState({
+            set2: this.state.set2 + 1
+        })
+    }
+}
+
+addGamePoint = (player) => {
+    if (player === 1)
+    {
+        this.setState({
+            game1: this.state.game1 + 1
+        })
+    }
+    else {
+        this.setState({
+            game2: this.state.game2 + 1
+        })
+    }
+}
+
+addPlayerPoint = (player) => {
+    if (player === 1)
+    {
+        this.setState({
+            score1: this.state.score1 + 1,
+            boardTitle: "Score Board" //To update congrats message back to scoreboard upon full match completion
+        })  
+    }
+    else {
+        this.setState({
+            score2: this.state.score2 + 1,
+            boardTitle: "Score Board"
+        })  
+    }
+}
 
 }
 
