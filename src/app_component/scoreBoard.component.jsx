@@ -5,235 +5,274 @@ import "./scoreBoard.style.css";
 
 
 class ScoreBoard extends Component {
-    constructor(props) {
+    constructor() {
         super();
         this.state = {
             score1: 0,
-            score2: 0
+            score2: 0,
+            game1: 0,
+            game2: 0,
+            set1: 0,
+            set2: 0,
+
+            boardTitle: "Score Board"
         }
     }
-
-    //Create updateScore function to add game point to player winning game
-        //If player wins 6 games (and games are won by difference of 2), add 1 to their set
-            //If game score is 6-5, continue playing till there is game difference of 2
-            //If game score is 6-6, play tiebreaker
-
-    
-    isDeuce = (player) => {
-        if (player === 1)
-        {
-            //Continues tallying points for player if game is in deuce
-            if (this.state.score1 >= 3 && this.state.score1 === this.state.score2)
-            {
-                this.addPlayerPoint(player)
-            } 
-        }
-        else {
-            if (this.state.score2 >= 3 && this.state.score2 === this.state.score1)
-            {
-                this.addPlayerPoint(player)
-            } 
-        }
-    };
-
-    calculateScore = (player) => { /*----------condense this function----------*/
-        if (player === 1) 
-        {
-            this.isDeuce(player);
-            //Check if point scoring player has advantage
-            if (this.state.score1 >= 4 && this.state.score1 === this.state.score2 + 1) {
-                this.setState({
-                    score1: 0,
-                    score2: 0
-                })   
-            }           
-            //Check if player scored game point
-            else if ((this.state.score1 >= 3) && (this.state.score1 > this.state.score2 +2)){
-                this.setState({
-                    score1: 0,
-                    score2: 0
-                }) 
-            }
-            else {
-                this.addPlayerPoint(player)
-            }
-        }
-        //Do the same for player 2
-        else {
-            this.isDeuce(player);
-            if (this.state.score2 >= 4 && this.state.score2 === this.state.score1 + 1){
-                this.setState({
-                    score1: 0,
-                    score2: 0
-                })   
-            }
-            else if ((this.state.score2 >= 3) && (this.state.score2 > this.state.score1 +2)){
-                this.setState({
-                    score1: 0,
-                    score2: 0
-                }) 
-            }
-            else {
-                this.addPlayerPoint(player)
-            }
-        }     
-    };
-
-    translateScore(score) {
-        let translatedScore;
-
-        switch (score)
-            {
-                case 3:
-                    translatedScore = 40;
-                    break;
-                case 2:
-                    translatedScore = 30;
-                    break;
-                case 1:
-                    translatedScore = 15;
-                    break;
-                case 0:
-                    translatedScore = "Love";
-                    break;
-                default:
-                    translatedScore = "-";
-                    break;
-            }
-
-        return translatedScore;
-    }
-
-    displayScore(player) {
-
-        var playerScore;
-        if (player === 1)
-        {
-            playerScore = this.translateScore(this.state.score1)
-        }
-        else 
-        {
-            playerScore = this.translateScore(this.state.score2)
-        }
-        
-        return playerScore;
-    }
-
-    addPlayerPoint = (player) => {
-        if (player === 1)
-        {
-            this.setState({
-                score1: this.state.score1 + 1
-            })  
-        }
-        else {
-            this.setState({
-                score2: this.state.score2 + 1
-            })  
-        }
-    };
-
 
     render() {
-    return (
-        <div className="container">
-            <div className="borderDiv">
-                <div className="scoreBoard">
+        return (          
+            <div className="container">
+                <div className="borderDiv">
+                    <div className="scoreBoard">
 
-                    <h1>Score Board</h1>
+                        <h1>{this.state.boardTitle}</h1>
 
-                    <h5 className="py-4">
-                        <img src= {tennisIcon} className="App-logo" alt="logo"></img>
-                    </h5>
+                        <h5 className="py-4">
+                            <img src= {tennisIcon} className="App-logo" alt="logo"></img>
+                        </h5>
 
-                    <h4>
-                        <span className="px-5">{this.props.playerObj.player1}</span>
-                        <span className="px-5">{this.props.playerObj.player2}</span>
-                    </h4>
+                        <h4>
+                            <span className="px-5">{this.props.playerObj.firstPlayer}</span>
+                            <span className="px-5">{this.props.playerObj.secondPlayer}</span>
+                        </h4>
 
-                    <h1>
-                        <span className="px-4">Score: {this.displayScore(1)}</span>
-                        <span className="px-4">Score: {this.displayScore(2)}</span>
-                    </h1>
+                        <h1>
+                            <span className="px-4">Score: {this.displayScore(1)}</span>
+                            <span className="px-4">Score: {this.displayScore(2)}</span>
+                        </h1>
 
-                    <div className="games">
-                        <span className="px-4">Games: 0 || Sets: 0</span>
-                        <span className="px-4">Games: 0 || Sets: 0</span>
-                    </div>
-
-                    <div className="row">           
-                        <div className="pt-4">
-                            <button className="player1btn" onClick = {() => this.calculateScore(1)}>Score Point</button>
+                        <div className="games">
+                            <span className="px-4">Games: {this.state.game1} || Sets: {this.state.set1}</span>
+                            <span className="px-4">Games: {this.state.game2} || Sets: {this.state.set2}</span>
                         </div>
-                        <div className="pt-4">
-                            <button className="player2btn" onClick = {() => this.calculateScore(2)}>Score Point</button>
-                        </div>
-                    </div>
 
-                   
+                        <div className="row">           
+                            <div className="pt-4">
+                                <button className="player1btn" onClick = {() => this.calculateScore(1)}>Score Point</button>
+                            </div>
+                            <div className="pt-4">
+                                <button className="player2btn" onClick = {() => this.calculateScore(2)}>Score Point</button>
+                            </div>
+                        </div>               
+                    </div>
                 </div>
+                
             </div>
-        </div>
-    )
-}
+    )   
 }
 
-export default ScoreBoard;
+//resets state variables and displays message to winning player
+resetBoard = (winningPlayer) => {
+    this.setState({
+        game1: 0,
+        game2: 0,
+        set1: 0,
+        set2: 0,
+        boardTitle: "Congratulations " + winningPlayer
+    })
+}
 
+handleWin = (player) => {
+    let p1 = this.props.playerObj.firstPlayer
+    let p2 = this.props.playerObj.secondPlayer
+    if (player === 1)
+    {
+        this.resetBoard(p1)
+    }
+    else {
+        this.resetBoard(p2)
+    }
+    
+}
 
-/*    addPoints = (score, player) => { //-----find neater way to write this
-
-        if (player === 1)
-        {
-            if (score === 30){ //third point is scored as +10
-                this.setState({
-                    score1: this.state.score1 + 10
-                })  
-            }
-            //If both players reach the same score of atleast 40, it is a deuce
-            //Continue playing until a player scores 2 more points than the other
-            else if (score >= 40 && this.state.score2 >= 40) 
-            {
-                this.setState({
-                    score1: this.state.score1 + 15
-                })
-            }
-            else if (score === 40 || (score > 40 && score > this.state.score2) || (score === 70)){ 
-                //call updateScore
-                this.setState({
-                    score1: 0,
-                    score2: 0
-                })              
-            } 
-            else {
-                this.setState({
-                    score1: this.state.score1 + 15
-                }) 
-            }   
+updateSetPoint = (player) => {
+    if (player === 1)
+    {
+        if (this.state.set1 === 1){
+            //player1 wins
+            this.handleWin(player)
         }
         else {
-            if (score === 30){
+            this.setState({
+                set1: this.state.set1 + 1
+            }) }      }
+    else {
+        if (this.state.set2 === 1){
+            //player2 wins
+            this.handleWin(player)
+        }
+        else {
+            this.setState({
+                set2: this.state.set2 + 1
+            }) 
+        }     }
+}
+
+isDeuce = (player) => {
+    if (player === 1)
+    {
+        //Continues tallying points for player if game is in deuce
+        if (this.state.score1 >= 3 && this.state.score1 === this.state.score2)
+        {
+            this.addPlayerPoint(player)
+        } 
+    }
+    else {
+        if (this.state.score2 >= 3 && this.state.score2 === this.state.score1)
+        {
+            this.addPlayerPoint(player)
+        } 
+    }
+};
+
+translateScore(score) {
+    let translatedScore;
+
+    switch (score)
+        {
+            case 3:
+                translatedScore = 40;
+                break;
+            case 2:
+                translatedScore = 30;
+                break;
+            case 1:
+                translatedScore = 15;
+                break;
+            case 0:
+                translatedScore = "Love";
+                break;
+            default:
+                translatedScore = "Advantage"; 
+                break;
+        }
+
+    return translatedScore;
+}
+
+displayScore(player) {
+
+    var playerScore;
+    if (player === 1)
+    {
+        playerScore = this.translateScore(this.state.score1)
+    }
+    else 
+    {
+        playerScore = this.translateScore(this.state.score2)
+    }
+    
+    return playerScore;
+}
+
+addPlayerPoint = (player) => {
+    if (player === 1)
+    {
+        this.setState({
+            score1: this.state.score1 + 1,
+            boardTitle: "Score Board"
+        })  
+    }
+    else {
+        this.setState({
+            score2: this.state.score2 + 1,
+            boardTitle: "Score Board"
+        })  
+    }
+};
+
+updateGamePoint = (player) => {
+    if (player === 1)
+    {
+        //If opponent game score is also 5, continue playing till there is a game difference of 2
+        if (this.state.game1 === 5 && this.state.game2 === 5){
+            this.setState({
+                game1: this.state.game1 + 1
+            })}
+        
+        else {
+            this.setState({
+                game1: this.state.game1 + 1
+            })  
+            //Reset game score and add 1 set point to winning player
+            if (this.state.game1 >= 5){
+                this.updateSetPoint(player)
+
                 this.setState({
-                    score2: this.state.score2 + 10
-                })  
-            }
-            else if ((score >= 40 && this.state.score1 >= 40) && (score === this.state.score1))
-            {
+                    game1: 0,
+                    game2: 0
+                })}
+        }           
+    }
+    else {
+        if (this.state.game2 === 5 && this.state.game1 === 5){
+            this.setState({
+                game2: this.state.game2 + 1
+            })}
+        else {
+            this.setState({
+                game2: this.state.game2 + 1
+            })  
+            if (this.state.game2 >= 5){
+                this.updateSetPoint(player)
+
                 this.setState({
-                    score2: this.state.score2 + 15
-                })
-            }
-            else if (score === 40 || (score >= 40 && score > this.state.score1)){
-                //call updateScore
-                this.setState({
-                    score1: 0,
-                    score2: 0
-                }) 
-            } 
-            else {
-                this.setState({
-                    score2: this.state.score2 + 15
-                }) 
-            }  
-        }       
-    }; */
+                    game1: 0,
+                    game2: 0
+                })}
+        } 
+    }
+};
+
+calculateScore = (player) => { /*----------condense this function----------*/
+    if (player === 1) 
+    {
+        this.isDeuce(player);
+        //Check if point scoring player has advantage
+        if (this.state.score1 >= 4 && this.state.score1 === this.state.score2 + 1) {
+            this.setState({
+                score1: 0,
+                score2: 0
+            })   
+            this.updateGamePoint(player)
+        }           
+        //Check if player scored game point
+        else if ((this.state.score1 >= 3) && (this.state.score1 > this.state.score2 +2)){
+            this.setState({
+                score1: 0,
+                score2: 0
+            }) 
+            this.updateGamePoint(player)
+        }
+        else {
+            this.addPlayerPoint(player)
+        }
+    }
+    //Do the same for player 2
+    else {
+        this.isDeuce(player);
+        if (this.state.score2 >= 4 && this.state.score2 === this.state.score1 + 1){
+            this.setState({
+                score1: 0,
+                score2: 0
+            })   
+            this.updateGamePoint(player)
+        }
+        else if ((this.state.score2 >= 3) && (this.state.score2 > this.state.score1 +2)){
+            this.setState({
+                score1: 0,
+                score2: 0
+            }) 
+            this.updateGamePoint(player)
+        }
+        else {
+            this.addPlayerPoint(player)
+        }
+    }     
+};
+
+}
+
+
+
+export default ScoreBoard;
