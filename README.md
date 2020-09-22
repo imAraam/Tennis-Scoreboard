@@ -1,7 +1,7 @@
 ## App Description
 
 This is a tennis point scoring system built with ReactJS. 
-It has 2 child components found in the ### '/src/app_component' directory. The Form component is responsible for prompting the user for the two player names and then sending that information to it's parent in the App.js file. The parent then sends the player names to the ScoreBoard component where they are displayed along with each player's respective scores. The ScoreBoard component is also responsible for making the necessary score calculations in accordance with how they would normally be calculated and displayed in a real Tennis match. 
+It has 2 child components found in the /src/app_component directory. The Form component is responsible for prompting the user for the two player names and then sending that information to it's parent in the App.js file. The parent then sends the player names to the ScoreBoard component where they are displayed along with each player's respective scores. The ScoreBoard component is also responsible for making the necessary score calculations in accordance with how they would normally be calculated and displayed in a real Tennis match. 
 
 
 ## Available Scripts
