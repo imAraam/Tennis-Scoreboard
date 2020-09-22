@@ -1,6 +1,7 @@
 ## App Description
 
-This is a tennis point scoring system built with ReactJS.
+This is a tennis point scoring system built with ReactJS. 
+It has 2 child components found in the '/src/app_component' directory
 
 
 ## Available Scripts
