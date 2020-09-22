@@ -6,10 +6,6 @@ import ScoreBoard from "./app_component/scoreBoard.component.jsx";
 import Form from "./app_component/form.component.jsx";
 
 
-//Condense calculateScore() and updateGamePoint()
-
-//Make UI look better
-
 class App extends React.Component {
   constructor() {
     super();
