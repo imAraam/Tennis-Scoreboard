@@ -1,0 +1,29 @@
+.form {
+    margin-left: 28rem;
+    margin-top: 2rem;
+}
+
+form input[name = "player1Name"],
+form input[name = "player1Name"] {
+    background-color: transparent;
+    color: white;
+    border-bottom: 2px solid whitesmoke;
+    border-radius: 0;
+}
+
+form input:focus {
+    background-color: transparent;
+    box-shadow: none !important;
+}
+
+.secondPlayer {
+    position: absolute;
+    margin-left: 20rem;  
+    margin-top: -38px;
+    width: 270px;
+}
+
+.submitbtn {
+    margin-left: 35rem;  
+    margin-top: -38px;
+}
