@@ -143,7 +143,7 @@ translateScore(score) {
                 translatedScore = "Love";
                 break;
             default:
-                translatedScore = "Advantage"; 
+                translatedScore = "Adv."; 
                 break;
         }
 
