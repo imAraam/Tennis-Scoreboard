@@ -3,28 +3,45 @@ import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ScoreBoard from "./app_component/scoreBoard.component.jsx";
+import Form from "./app_component/form.component.jsx";
 
 
+//Condense calculateScore() and updateGamePoint()
 
-//Create form component to appear before match begins and prompt for player names
-  //Makes scoreboard visible once names are given and passed to scoreboard component
-  //Once a player has 2 set points removes scoreboard visibility and shows a congratulations message to winner
+//Make UI look better
 
 class App extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      firstPlayerName: "",
+      secondPlayerName: ""
+    };
   }
+
 
   render() {
     return (
-      <div className="App">   
-        <ScoreBoard 
+      <div className="App">  
+        <Form functionCallFromParent = {this.getPlayerNames.bind(this)}/>
+
+        {/* //Display scoreboard if user provides player name */}
+        {this.state.firstPlayerName !== "" ? <ScoreBoard 
         playerObj = {{
-          player1: "Sam",
-          player2: "Dean" }}/>
+          firstPlayer: this.state.firstPlayerName,
+          secondPlayer: this.state.secondPlayerName }}/> : null}
       </div>
     );
+  }
+
+
+  getPlayerNames = (firstPlayer, secondPlayer) => {
+
+    this.setState ({
+      firstPlayerName: firstPlayer,
+      secondPlayerName: secondPlayer
+    })
+
   }
 }
 
