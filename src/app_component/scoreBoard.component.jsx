@@ -159,7 +159,10 @@ updateGamePoint = (player) => {
         //If opponent game score is also 5, continue playing till there is a game difference of 2
         if (this.state.game1 === 5 && this.state.game2 === 5){
             this.addGamePoint(player)}
-        
+        //Allows tiebreaker game to be played upon a 6-6 draw
+        else if (this.state.game1 === 5 && this.state.game2 === 6) {
+            this.addGamePoint(player)
+        }
         else {
             this.addGamePoint(player) 
             //Reset game score and add 1 set point to winning player
@@ -172,6 +175,9 @@ updateGamePoint = (player) => {
     else {
         if (this.state.game2 === 5 && this.state.game1 === 5){
             this.addGamePoint(player)}
+        else if (this.state.game2 === 5 && this.state.game1 === 6) {
+            this.addGamePoint(player)
+        }
         else {
             this.addGamePoint(player)
 
